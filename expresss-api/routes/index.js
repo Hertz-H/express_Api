@@ -16,6 +16,20 @@ app.set("view engine", "ejs");
 
 console.log("start Server");
 
+app.get("/", (request, response, next) => {
+  axios
+    .get("https://dummyjson.com/products?limit=10")
+    .then((res) => {
+      var data = res.data.products;
+      console.log("in axi");
+      console.log(data);
+      response.render("product", { data });
+      response.end();
+    })
+    .catch((err) => {
+      console.error("Error: ", err.message);
+    });
+});
 
 app.get("/products", (request, response, next) => {
   axios
